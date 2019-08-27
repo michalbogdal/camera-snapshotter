@@ -8,6 +8,7 @@ Example image file: cam_1566946799874.png
 # Building and running
 
 ```
+npm install
 npm start
 ```
 
