@@ -1,6 +1,22 @@
-Simple Electron app to take photos from camera. Mainly to used togheter with "Do not Disturb" application.
-App takes 2 photos (one after 1 sec, another after 5sec)
+Simple Electron app to take photos from camera (webcamjs). 
+Application is created mainly for integrating with "Do not Disturb" application.
 
-Photos are saved in "/Users/MB/Library/Application Support/electron-screenshot/camera/"
+We will take 2 photos (one after 1 sec, another after 5sec) and store in "/Users/MB/Library/Application Support/electron-screenshot/camera/" directory
 
-Image file: cam_1566946799874.png
+Example image file: cam_1566946799874.png
+
+# Building and running
+
+```
+npm start
+```
+
+for native packages
+```
+npm run electron-build
+```
+
+in "Do Not Disturb" application we can then use 
+```
+open /Applications/electron-snapshot.app
+```
