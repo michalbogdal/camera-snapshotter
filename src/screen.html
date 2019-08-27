@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Electron + WebCamera</title>
+  </head>
+  <body>
+    <div id="my_camera"></div>
+    <script>
+      var WebCamera = require("webcamjs");
+      const ipcRenderer = require("electron").ipcRenderer;
+
+      function processBase64Image(dataString) {
+        var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+          response = {};
+        if (matches.length !== 3) {
+          return new Error("Invalid input string");
+        }
+        response.type = matches[1];
+        response.data = new Buffer(matches[2], "base64");
+        return response;
+      }
+
+      function takeSnapshotAndSend() {
+        WebCamera.snap(function(data_uri) {
+            var imageBuffer = processBase64Image(data_uri);
+            ipcRenderer.send("capturedImage", imageBuffer);
+          });
+      }
+
+      WebCamera.set({
+        width: 320,
+        height: 240,
+        image_format: "jpeg",
+        jpeg_quality: 90
+      });
+      WebCamera.attach("#my_camera");
+      WebCamera.on("live", function() {
+        setTimeout(() => {
+            takeSnapshotAndSend()
+            setTimeout(() => {
+                takeSnapshotAndSend()
+            }, 5000)}
+        , 1000)
+      });
+    </script>
+  </body>
+</html>
