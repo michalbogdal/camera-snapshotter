@@ -1,20 +1,22 @@
 {
-  "name": "electron-snapshot",
+  "name": "camera-snapshotter",
   "version": "1.0.0",
-  "description": "Simple app to make 2 snapshots from camera",
+  "description": "Simple application to persist snapshots from camera",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
+    "start-config": "electron . -config",
     "electron-build": "electron-builder"
   },
   "keywords": [],
-  "author": "",
+  "author": "Michal Bogdal",
   "license": "ISC",
   "devDependencies": {
     "electron-prebuilt": "^1.4.13",
     "electron-builder": "^21.2.0"
   },
   "dependencies": {
+    "electron-settings": "^3.2.0",
     "webcamjs": "^1.0.25"
   }
 }

@@ -2,10 +2,36 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Electron + WebCamera</title>
+    <title>Camera Snapshotter - Configuration</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="my_camera"></div>
+    <div class="form-style-1">
+      <div id="my_camera"></div>
+    </div>
+
+    <div class="form-style-1">
+      <label>Images directory </label>
+      <input type="text" id="imagesDir" class="field-long" />
+      <input
+        type="button"
+        value="select new path"
+        onclick="javascript:ipcRenderer.send('selectNewImagesPath', document.getElementById('imagesDir').value);"
+      />
+      <input
+        type="button"
+        value="select default path"
+        onclick="javascript:ipcRenderer.send('selectDefaultImagesPath');"
+      />
+    </div>
+    <div class="form-style-1">
+      <input
+        type="button"
+        value="save"
+        onclick="javascript:ipcRenderer.send('saveImagesPath', document.getElementById('imagesDir').value);"
+      />
+    </div>
+
     <script>
       var WebCamera = require("webcamjs");
       const ipcRenderer = require("electron").ipcRenderer;
@@ -23,10 +49,15 @@
 
       function takeSnapshotAndSend() {
         WebCamera.snap(function(data_uri) {
-            var imageBuffer = processBase64Image(data_uri);
-            ipcRenderer.send("capturedImage", imageBuffer);
-          });
+          var imageBuffer = processBase64Image(data_uri);
+          ipcRenderer.send("capturedImage", imageBuffer);
+        });
       }
+
+      ipcRenderer.send("fetchConfig");
+      ipcRenderer.on("config", (event, config) => {
+        document.getElementById("imagesDir").value = config.imagesDir;
+      });
 
       WebCamera.set({
         width: 320,
@@ -37,11 +68,11 @@
       WebCamera.attach("#my_camera");
       WebCamera.on("live", function() {
         setTimeout(() => {
-            takeSnapshotAndSend()
-            setTimeout(() => {
-                takeSnapshotAndSend()
-            }, 5000)}
-        , 1000)
+          takeSnapshotAndSend();
+          setInterval(() => {
+            takeSnapshotAndSend();
+          }, 5000);
+        }, 1000);
       });
     </script>
   </body>
