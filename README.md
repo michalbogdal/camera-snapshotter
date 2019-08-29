@@ -7,7 +7,6 @@ allowing to make camera snapshots and saving them when macbook lid is opened.
 
 Application is taking 2 photos (one after 1 sec, another after 5sec) and store in a defined path, which by default could be */Users/michalbogdal/Library/Application Support/camera-snapshotter/camera*
 
-Example image file: cam_1566946799874.png
 
 # Configuration
 If application is executed with parameter "-config" we will see window where we can change default path for stored images.
@@ -15,7 +14,7 @@ If application is executed with parameter "-config" we will see window where we 
 ```
 npm run start-config
 ```
-or native mac app
+or native macosx app
 ```
 open camera-snapshotter.app --args -config
 ```
