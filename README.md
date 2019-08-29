@@ -22,6 +22,8 @@ open camera-snapshotter.app --args -config
 
 All settings are stored using ***electron-settings*** module which persist config in */Users/michalbogdal/Library/Application Support/camera-snapshotter/Settings*
 
+![Screenshot](screenshot/configuration.png)
+
 # Building and running
 
 ```
